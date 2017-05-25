@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/defaults :: head">
+</head>
+<body>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    <section th:replace="fragments/live :: live-section"></section>
+    <!--/*@thymesVar id="loginError" type="java.lang.Boolean"*/-->
+    <!--<p th:if="${loginError}" class="error">Wrong user or password</p>-->
+    <!--<form th:action="@{/login}" th:object="${accountForm}" method="post">-->
+    <!--<input type="text" th:fieldusernamename}" autofocus="autofocus" placeholder="Name"/> <br/>-->
+    <!--<input type="text" th:field="*{email}" placeholder="Email"/> <br/>-->
+    <!--<input type="password" th:field="*{password}" placeholder="Password"/> <br/>-->
+    <!--<input type="submit" value="Log in"/>-->
+    <!--</form>-->
+
+    <section class="login-container">
+        <!--/*@thymesVar id="accountLoginForm" type="pl.edu.tirex.blazingsquad.web.forms.AccountLoginForm"*/-->
+        <form th:action="@{/login}" th:object="${accountLoginForm}" method="post">
+            <h3 class="login-legend">Zaloguj się</h3>
+            <p class="form-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</p>
+            <p class="form-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+            <input th:class="${#fields.hasErrors('username')} ? 'form-error' : null" type="text" th:field="*{username}" placeholder="Nazwa użytkownika" minlength="3" maxlength="32"/>
+            <input th:class="${#fields.hasErrors('password')} ? 'form-error' : null" type="password" th:field="*{password}" placeholder="Hasło" minlength="6"/>
+            <button type="submit">Zaloguj się</button>
+            <div class="login-actions">
+                <a th:href="@{register}">Zarejestruj się</a>
+                <a th:href="@{register}">Nie pamiętasz hasła?</a>
+            </div>
+        </form>
+    </section>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/defaults :: head">
+</head>
+<body>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    <section th:replace="fragments/live :: live-section"></section>
+    <section th:replace="fragments/statistic :: statistic-section"></section>
+
+    <section class="container">
+        <div class="text-content">
+            <h1>Czym jest BlazingSquad?</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tempus, nunc a sollicitudin
+                suscipit, lacus elit tincidunt lacus, eu tristique lacus nibh in purus. Donec sagittis odio nec dui
+                rhoncus bibendum aliquam ac mi. Praesent et tellus urna. Pellentesque orci metus, bibendum sed massa at,
+                dignissim faucibus quam. Quisque lacinia, magna et ornare faucibus, dui nisl consequat leo, eu faucibus
+                erat enim ac metus. Nunc congue efficitur quam a malesuada. Praesent tincidunt semper libero sed
+                pulvinar. Quisque vitae felis nunc. Morbi varius diam eu leo consectetur, ac mollis justo dictum. Sed
+                porta urna varius dignissim suscipit. Curabitur id est eget justo molestie finibus vitae quis massa.
+                Duis sapien ipsum, rhoncus in odio ac, lobortis ornare felis. Praesent at mauris ullamcorper, fermentum
+                ante vitae, placerat est. Nam consequat vestibulum placerat. Quisque nec dolor luctus, fringilla dolor
+                sollicitudin, auctor enim. Praesent sagittis mollis felis vel faucibus.</p>
+        </div>
+    </section>
+
+    <!--/*@thymesVar id="title" type="java.lang.String"*/-->
+    <p th:if="${title}" th:text="${title}"></p>
+
+    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script>
+        $(function () {
+            function hasChildren(parent, type)
+            {
+                return parent.is(type) || parent.find(type).length > 0;
+            }
+
+            function isUndefined(node)
+            {
+                return typeof(node) === "undefined";
+            }
+
+            function hideNavElements(elements)
+            {
+                if (isUndefined(elements))
+                {
+                    elements = $(".nav-elements");
+                }
+                if (isUndefined(elements))
+                {
+                    return false;
+                }
+                if (elements.is(":visible")) {
+                    elements.css("display", "none");
+                    return true;
+                }
+                return false;
+            }
+
+            $(".nav-header").click(function () {
+                if (window.innerWidth > 760) {
+                    return;
+                }
+                var elements = $(".nav-elements");
+                if (!hideNavElements(elements)) {
+                    elements.css("display", "flex");
+                }
+            });
+            $("body").click(function(event)
+            {
+                if (hasChildren($(".nav"), $(event.target)))
+                {
+                    return;
+                }
+                hideNavElements();
+            });
+            $(window).on("scroll", function() {
+                hideNavElements();
+            });
+        });
+    </script>
+</body>
+</html>

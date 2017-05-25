@@ -1,0 +1,6 @@
+Witamy Cię w społeczności blazingsquad!
+
+Wciśnij następujący adres, aby potwierdzić i aktywować nowe konto:
+%{base_url}/activate-account/%{email_token}
+
+Jeżeli nie możesz wcisnąć powyższego linku, spróbuj go skopiować i wkleić do paska adresu przeglądarki internetowej.

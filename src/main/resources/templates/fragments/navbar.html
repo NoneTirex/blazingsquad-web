@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <nav class="nav full-width" th:fragment="navbar">
+        <img class="nav-header" th:src="@{/images/blazingpack.png}" src="/static/images/blazingpack.png"/>
+        <div class="nav-elements">
+            <!--/*@thymesVar id="account" type="pl.edu.tirex.blazingsquad.web.Account"*/-->
+            <a th:href="@{/}"><i class="fa fa-home"></i>Strona Główna</a>
+            <a href="#"><i class="fa fa-users"></i>Ekipa</a>
+            <a href="#"><i class="fa fa-video-camera"></i>Ostatnie filmy</a>
+            <a href="#"><i class="fa fa-list-ol"></i>Ranking</a>
+            <a href="#"><i class="fa fa-file"></i>Rekrutacja</a>
+            <a th:if="${account}" th:href="@{/user}"><i class="fa fa-address-card"></i>Profil użytkownika</a>
+        </div>
+    </nav>
+</body>
+</html>

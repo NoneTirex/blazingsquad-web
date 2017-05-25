@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/defaults :: head">
+</head>
+<body>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    <section th:replace="fragments/live :: live-section"></section>
+
+    <div class="login-container">
+        <!--/*@thymesVar id="accountRegisterForm" type="pl.edu.tirex.blazingsquad.web.forms.AccountRegisterForm"*/-->
+        <form th:action="@{/register}" th:object="${accountRegisterForm}" method="post">
+            <h3 class="login-legend">Zarejestruj się</h3>
+            <p class="form-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</p>
+            <p class="form-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</p>
+            <p class="form-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+            <input th:class="${#fields.hasErrors('username')} ? 'form-error' : null" type="text" th:field="*{username}" placeholder="Nazwa użytkownika" minlength="3" maxlength="32"/>
+            <input th:class="${#fields.hasErrors('email')} ? 'form-error' : null" type="email" th:field="*{email}" placeholder="Email"/>
+            <input th:class="${#fields.hasErrors('password')} ? 'form-error' : null" type="password" th:field="*{password}" placeholder="Hasło" minlength="6"/>
+            <button type="submit">Zarejestruj się</button>
+            <div class="login-actions">
+                <a th:href="@{login}">Zaloguj się</a>
+                <a th:href="@{login}">Polityka prywatności</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

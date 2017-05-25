@@ -1,0 +1,55 @@
+{
+  "properties": [
+    {
+      "name": "youtube.key",
+      "type": "java.lang.String",
+      "description": "Key for youtube developer API."
+    },
+    {
+      "name": "google.client-id",
+      "type": "java.lang.String",
+      "description": "Description for google.client-key."
+    },
+    {
+      "name": "google.client-secret",
+      "type": "java.lang.String",
+      "description": "Description for google.client-key."
+    },
+    {
+      "name": "google.scopes",
+      "type": "java.lang.String[]",
+      "description": "Description for google.scopes."
+    },
+    {
+      "name": "spark-post.key",
+      "type": "java.lang.String",
+      "description": "Description for spark-post.key."
+    },
+    {
+      "name": "email",
+      "type": "java.lang.String",
+      "description": "Description for email."
+    },
+    {
+      "name": "hash",
+      "defaultValue": "MD5",
+      "type": "java.lang.String",
+      "description": "Description for email."
+    }
+  ],
+  "hints": [
+    {
+      "name": "hash",
+      "values": [
+        {
+          "value": "MD5",
+          "description": "Md5 method cryptography."
+        },
+        {
+          "value": "BCrypt",
+          "description": "BCrypt method cryptography."
+        }
+      ]
+    }
+  ]
+}
