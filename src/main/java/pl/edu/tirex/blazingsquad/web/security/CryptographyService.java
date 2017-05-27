@@ -9,7 +9,7 @@ public class CryptographyService
         this.defaultCryptographyMethod = defaultCryptographyMethod;
     }
 
-    public HashedPassword hashPassword(String password, String salt) throws HashException
+    public HashedPassword hashPassword(String password) throws HashException
     {
         if (this.defaultCryptographyMethod == null)
         {

@@ -136,7 +136,7 @@ public class AccountManager
 
     public Account createAccount(AccountRegisterForm accountRegisterForm) throws HashException
     {
-        HashedPassword hashedPassword = this.cryptographyService.hashPassword(accountRegisterForm.getPassword(), accountRegisterForm.getUsername());
+        HashedPassword hashedPassword = this.cryptographyService.hashPassword(accountRegisterForm.getPassword());
         return new Account(new Name(accountRegisterForm.getUsername(), null), hashedPassword, accountRegisterForm.getEmail());
     }
 }
