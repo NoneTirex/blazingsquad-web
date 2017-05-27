@@ -8,13 +8,18 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeToken
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.services.youtube.YouTube;
+import com.google.api.services.youtube.model.Channel;
 import com.google.api.services.youtube.model.ChannelListResponse;
+import com.google.api.services.youtube.model.ChannelSnippet;
+import com.google.api.services.youtube.model.ChannelStatistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.edu.tirex.blazingsquad.web.groups.Flag;
-import pl.edu.tirex.blazingsquad.web.groups.GroupFlag;
+import pl.edu.tirex.blazingsquad.web.Account;
+import pl.edu.tirex.blazingsquad.web.channels.YoutubeChannel;
+import pl.edu.tirex.blazingsquad.web.channels.youtube.YoutubeChannelInformation;
+import pl.edu.tirex.blazingsquad.web.channels.youtube.YoutubeChannelStatistics;
 import pl.edu.tirex.blazingsquad.web.groups.RequiredAuthorized;
 import pl.edu.tirex.blazingsquad.web.repositories.AccountRepository;
 import pl.edu.tirex.blazingsquad.web.repositories.YoutubeChannelRepository;
@@ -42,8 +47,12 @@ public class YoutubeController
     }
 
     @RequestMapping(value = "/auth")
-    public String youtubeAuth(HttpServletRequest request, @RequestParam(value = "code", required = false) String code, @RequestParam(value = "error", required = false) String error)
+    public String youtubeAuth(HttpServletRequest request, Account account, @RequestParam(value = "code", required = false) String code, @RequestParam(value = "error", required = false) String error)
     {
+        if (code == null && (error == null || !error.equalsIgnoreCase("true")))
+        {
+            return "redirect:/";
+        }
         GoogleAuthorizationCodeTokenRequest codeTokenRequest = this.googleAuthorizationCodeFlow.newTokenRequest(code);
         codeTokenRequest.setRedirectUri(HttpRequestUtils.getHostURL(request) + "/youtube/auth");
         try
@@ -51,28 +60,54 @@ public class YoutubeController
             GoogleTokenResponse tokenResponse = codeTokenRequest.execute();
             if (tokenResponse.getRefreshToken() == null)
             {
-                System.out.println("Cos sie ewidentnie spierdolilo!");
+                return "redirect:login";
             }
             Credential credential = new GoogleCredential();
             credential.setAccessToken(tokenResponse.getAccessToken());
-
             YouTube youTube = new YouTube.Builder(ApiService.HTTP_TRANSPORT, ApiService.JSON_FACTORY, credential).setApplicationName("blazingsquad-web").build();
-            ChannelListResponse channelResponse = youTube.channels().list("snippet,contentDetails").setMine(true).execute();
-            System.out.println(channelResponse.getItems());
+            ChannelListResponse channelResponse = youTube.channels().list("snippet,contentDetails,statistics").setMine(true).execute();
 
-            //            if (account != null && channelResponse.size() > 0)
-            //            {
-            //                Channel channel = channelResponse.getItems().get(0);
-            //                YoutubeChannel youtubeChannel = new YoutubeChannel(channel.getId(), tokenResponse.getRefreshToken());
-            //                youtubeChannel.setUploadsId(channel.getContentDetails().getRelatedPlaylists().getUploads());
-            //                YoutubeChannelInformation youtubeChannelInformation = new YoutubeChannelInformation();
-            //                youtubeChannelInformation.setUsername(channel.getSnippet().getTitle());
-            //                youtubeChannelInformation.setDescription(channel.getSnippet().getDescription());
-            //                youtubeChannel.setInformation(youtubeChannelInformation);
-            //                account.setYoutubeChannel(youtubeChannel);
-            //                this.youtubeChannelRepository.save(youtubeChannel);
-            //                this.accountRepository.save(account);
-            //            }
+            System.out.println((account != null && channelResponse.size() > 0) + " [" + (account != null) + "]");
+            if (account != null && channelResponse.size() > 0)
+            {
+                Channel youtubeChannel = channelResponse.getItems().get(0);
+                YoutubeChannel channel = new YoutubeChannel(youtubeChannel.getId(), tokenResponse.getRefreshToken());
+                channel.setUploadsId(youtubeChannel.getContentDetails().getRelatedPlaylists().getUploads());
+                channel.setRefreshToken(tokenResponse.getRefreshToken());
+
+                YoutubeChannelInformation channelInformation = channel.getInformation();
+                ChannelSnippet snippet = youtubeChannel.getSnippet();
+                if (snippet == null)
+                {
+                    System.out.println("Ponownie sie cos spierdolilo");
+                    return "redirect:login";
+                }
+                if (channelInformation == null)
+                {
+                    channelInformation = new YoutubeChannelInformation();
+                }
+                channelInformation.setName(snippet.getTitle());
+                channelInformation.setDescription(snippet.getDescription());
+                channel.setInformation(channelInformation);
+
+                ChannelStatistics statistics = youtubeChannel.getStatistics();
+                if (statistics != null)
+                {
+                    YoutubeChannelStatistics channelStatistics = channel.getStatistics();
+                    if (channelStatistics == null)
+                    {
+                        channelStatistics = new YoutubeChannelStatistics();
+                    }
+                    channelStatistics.setSubscribers(statistics.getSubscriberCount());
+                    channelStatistics.setViews(statistics.getViewCount());
+                    channelStatistics.setVideos(statistics.getVideoCount());
+                    channel.setStatistics(channelStatistics);
+                }
+
+                account.setYoutubeChannel(channel);
+                this.youtubeChannelRepository.save(channel);
+                this.accountRepository.save(account);
+            }
         }
         catch (TokenResponseException e)
         {
@@ -82,7 +117,7 @@ public class YoutubeController
         {
             e.printStackTrace();
         }
-        return "index";
+        return "redirect:/";
     }
 
     @RequestMapping("/login")

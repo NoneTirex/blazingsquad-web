@@ -21,6 +21,7 @@ body
     font-size: 15px;
     border-bottom: 2px solid #b47220;
     box-sizing: border-box;
+    z-index:1;
 }
 
 .nav-elements
@@ -149,6 +150,27 @@ body
     font-weight: bold;
 }
 
+.youtube-connect-section
+{
+    flex-wrap: wrap;
+    flex-direction: row;
+    background-color: #cd201f;
+    justify-content: center;
+    color:#fff;
+}
+.youtube-connect-section i
+{
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.youtube-connect-section:hover
+{
+    color:#fff;
+    text-decoration: none;
+    background-color: #b31217;
+}
+
 .login-container
 {
     background-color: #323137;
@@ -232,6 +254,21 @@ input.form-error
     width: 100%;
 }
 
+.advantages
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.advantage
+{
+    background-color:#000;
+    flex: 1 1 auto;
+}
+
 .text-content
 {
     background-color: #2b2a30;
@@ -273,7 +310,6 @@ a:hover
     .nav
     {
         font-size: 20px;
-        z-index: 1;
     }
 
     .nav-elements

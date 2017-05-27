@@ -6,7 +6,7 @@
     <nav th:replace="fragments/navbar :: navbar"></nav>
     <section th:replace="fragments/live :: live-section"></section>
     <section th:replace="fragments/statistic :: statistic-section"></section>
-
+    <section th:replace="fragments/user :: connect-account"></section>
     <section class="container">
         <div class="text-content">
             <h1>Czym jest BlazingSquad?</h1>
@@ -21,62 +21,65 @@
                 ante vitae, placerat est. Nam consequat vestibulum placerat. Quisque nec dolor luctus, fringilla dolor
                 sollicitudin, auctor enim. Praesent sagittis mollis felis vel faucibus.</p>
         </div>
+        <div class="advantages">
+            <div class="advantage">
+                <h1>Niezależni</h1>
+                <p>Niezawodnosc</p>
+            </div>
+            <div class="advantage">
+                <h1>Niezależni</h1>
+                <p>Niezawodnosc</p>
+            </div>
+        </div>
     </section>
 
     <!--/*@thymesVar id="title" type="java.lang.String"*/-->
     <p th:if="${title}" th:text="${title}"></p>
 
-    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
-    <script>
-        $(function () {
-            function hasChildren(parent, type)
-            {
-                return parent.is(type) || parent.find(type).length > 0;
-            }
+    <!--<script th:src="@{/js/jquery-3.2.1.min.js}"></script>-->
+    <!--<script>-->
+        <!--$(function () {-->
+            <!--function hasChildren(parent, type) {-->
+                <!--return parent.is(type) || parent.find(type).length > 0;-->
+            <!--}-->
 
-            function isUndefined(node)
-            {
-                return typeof(node) === "undefined";
-            }
+            <!--function isUndefined(node) {-->
+                <!--return typeof(node) === "undefined";-->
+            <!--}-->
 
-            function hideNavElements(elements)
-            {
-                if (isUndefined(elements))
-                {
-                    elements = $(".nav-elements");
-                }
-                if (isUndefined(elements))
-                {
-                    return false;
-                }
-                if (elements.is(":visible")) {
-                    elements.css("display", "none");
-                    return true;
-                }
-                return false;
-            }
+            <!--function hideNavElements(elements) {-->
+                <!--if (isUndefined(elements)) {-->
+                    <!--elements = $(".nav-elements");-->
+                <!--}-->
+                <!--if (isUndefined(elements)) {-->
+                    <!--return false;-->
+                <!--}-->
+                <!--if (elements.is(":visible")) {-->
+                    <!--elements.css("display", "none");-->
+                    <!--return true;-->
+                <!--}-->
+                <!--return false;-->
+            <!--}-->
 
-            $(".nav-header").click(function () {
-                if (window.innerWidth > 760) {
-                    return;
-                }
-                var elements = $(".nav-elements");
-                if (!hideNavElements(elements)) {
-                    elements.css("display", "flex");
-                }
-            });
-            $("body").click(function(event)
-            {
-                if (hasChildren($(".nav"), $(event.target)))
-                {
-                    return;
-                }
-                hideNavElements();
-            });
-            $(window).on("scroll", function() {
-                hideNavElements();
-            });
-        });
-    </script>
+            <!--$(".nav-header").click(function () {-->
+                <!--if (window.innerWidth > 760) {-->
+                    <!--return;-->
+                <!--}-->
+                <!--var elements = $(".nav-elements");-->
+                <!--if (!hideNavElements(elements)) {-->
+                    <!--elements.css("display", "flex");-->
+                <!--}-->
+            <!--});-->
+            <!--$("body").click(function (event) {-->
+                <!--if (hasChildren($(".nav"), $(event.target))) {-->
+                    <!--return;-->
+                <!--}-->
+                <!--hideNavElements();-->
+            <!--});-->
+            <!--$(window).on("scroll", function () {-->
+                <!--hideNavElements();-->
+            <!--});-->
+        <!--});-->
+    <!--</script>-->
 </body>
 </html>

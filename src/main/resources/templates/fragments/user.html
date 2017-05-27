@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <!--/*@thymesVar id="account" type="pl.edu.tirex.blazingsquad.web.Account"*/-->
+    <a th:href="@{/youtube/login}" th:if="${account} and ${account.youtubeChannel == null}" class="section youtube-connect-section" th:fragment="connect-account">
+        <i class="fa fa-youtube" aria-hidden="true"></i>Połącz Konto
+    </a>
+</body>
+</html>
