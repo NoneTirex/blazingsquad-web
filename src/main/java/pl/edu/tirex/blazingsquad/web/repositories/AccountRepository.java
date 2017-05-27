@@ -1,6 +1,9 @@
 package pl.edu.tirex.blazingsquad.web.repositories;
 
+import org.hibernate.jpa.criteria.CriteriaQueryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.edu.tirex.blazingsquad.web.Account;
@@ -23,7 +26,26 @@ public class AccountRepository
 
     public void save(Account account)
     {
-        this.entityManager.merge(account);
+        if (account.getId() == 0)
+        {
+            this.entityManager.persist(account);
+        }
+        else
+        {
+            this.entityManager.merge(account);
+        }
+        this.entityManager.flush();
+    }
+
+    public boolean alreadyInDatabase(Account account)
+    {
+        TypedQuery<Account> query = this.entityManager.createQuery("select account from Account account where account.name.name=:name or account.name.displayName=:display_name or account.email=:email", Account.class);
+        query.setParameter("name", account.getName().getName());
+        query.setParameter("display_name", account.getName().getDisplayName());
+        query.setParameter("email", account.getEmail());
+
+        List<Account> resultList = query.getResultList();
+        return resultList.size() > 0 && resultList.get(0) != null;
     }
 
     public Account findByName(String name)

@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Calendar;
+import java.util.Objects;
 
 @Entity
 @Table(name = "accounts")
@@ -50,6 +51,11 @@ public class Account
         this.name = name;
         this.password = password;
         this.email = email;
+    }
+
+    public long getId()
+    {
+        return id;
     }
 
     public Name getName()
@@ -111,6 +117,27 @@ public class Account
     {
 //        return this.confirmation != null && this.confirmation.getCode() == null && this.confirmation.getAccepted() != null;
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (!(o instanceof Account))
+        {
+            return false;
+        }
+        Account account = (Account) o;
+        return Objects.equals(name, account.name) && Objects.equals(email, account.email);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(name, email);
     }
 
     @Override

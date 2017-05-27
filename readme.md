@@ -10,3 +10,4 @@ ___
 #### Todo simple list
 - [ ] Add Youtube account integration
 - [ ] Expand user accounts
+- [ ] Add [Push Notifications](https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web)
