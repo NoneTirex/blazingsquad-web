@@ -10,4 +10,6 @@ ___
 #### Todo simple list
 - [ ] Add Youtube account integration
 - [ ] Expand user accounts
-- [ ] Add [Push Notifications](https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web)
+- [ ] Add Push Notifications ([usage](https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web) or [example](https://developers.google.com/web/fundamentals/engage-and-retain/push-notifications/))
+- [ ] Enable HTTPS on server ([how to](https://developers.google.com/web/fundamentals/security/encrypt-in-transit/enable-https))
+- [ ] Research the [Google Web Fundamentals](https://developers.google.com/web/fundamentals/) to improve functionality
