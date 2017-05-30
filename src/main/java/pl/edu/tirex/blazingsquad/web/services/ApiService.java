@@ -15,9 +15,6 @@ import pl.edu.tirex.blazingsquad.web.configuration.ApplicationConfiguration;
 @Service
 public class ApiService
 {
-    public static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-    public static final JsonFactory JSON_FACTORY = new JacksonFactory();
-
     private final ApplicationConfiguration configuration;
 
     @Autowired
@@ -27,25 +24,10 @@ public class ApiService
     }
 
     @Bean
-    public YouTube getYoutube()
-    {
-        return new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, null).setApplicationName("blazingsquad-web").build();
-    }
-
-    @Bean
     public Client getSparkPostClient()
     {
         Client client = new Client(this.configuration.getSparkPost().getKey());
         client.setFromEmail(this.configuration.getEmail());
         return client;
-    }
-
-    @Bean
-    public GoogleAuthorizationCodeFlow getGoogleAuthorizationCodeFlow()
-    {
-        GoogleAuthorizationCodeFlow.Builder builder = new GoogleAuthorizationCodeFlow.Builder(ApiService.HTTP_TRANSPORT, ApiService.JSON_FACTORY, this.configuration.getGoogle().getClientId(), this.configuration.getGoogle().getClientSecret(), this.configuration.getGoogle().getScopes());
-        builder.setAccessType("offline");
-        builder.setApprovalPrompt("auto");
-        return builder.build();
     }
 }
