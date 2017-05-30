@@ -1,7 +1,162 @@
-<html>
-<head>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/defaults :: head">
+	<title>Hello BlazingSquad!</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+
+    <link rel="stylesheet" type="text/css" href="static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" href="static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}"/>
 </head>
 <body>
-    test
+    <nav class="nav full-width" th:fragment="navbar">
+        <img class="nav-header" th:src="@{/images/blazingpack.png}" src="static/images/blazingpack.png"/>
+        <div class="nav-elements">
+            <!--/*@thymesVar id="account" type="pl.edu.tirex.blazingsquad.web.Account"*/-->
+            <a href="/" th:href="@{/}"><i class="fa fa-home"></i>Strona Główna</a>
+            <a href="#"><i class="fa fa-users"></i>Ekipa</a>
+            <a href="#"><i class="fa fa-video-camera"></i>Ostatnie filmy</a>
+            <a href="#"><i class="fa fa-list-ol"></i>Ranking</a>
+            <a href="#"><i class="fa fa-file"></i>Rekrutacja</a>
+            <a th:if="${account}" th:href="@{/user}"><i class="fa fa-address-card"></i>Profil użytkownika</a>
+        </div>
+    </nav>
+    <section class="section live-section full-width" th:fragment="live-section">
+        <p>Aktywne strumienie:</p>
+        <div class="video-list">
+            <div class="video">
+                <div class="video-image not-selectable">
+                    <img th:src="@{/images/video2.jpg}" src="static/images/video2.jpg"/>
+                    <i class="fa fa-youtube-play left-bottom" aria-hidden="true"></i>
+                </div>
+                <p>TiREX</p>
+            </div>
+            <div class="video">
+                <div class="video-image not-selectable">
+                    <img th:src="@{/images/video3.jpg}" src="static/images/video3.jpg"/>
+                    <i class="fa fa-twitch video-icon left-bottom" aria-hidden="true"></i>
+                </div>
+                <p>SzymonSzymek</p>
+            </div>
+            <div class="video">
+                <div class="video-image not-selectable">
+                    <img th:src="@{/images/video.jpg}" src="static/images/video.jpg"/>
+                    <i class="fa fa-youtube-play left-bottom" aria-hidden="true"></i>
+                </div>
+                <p>Buzkaa</p>
+            </div>
+            <div class="video">
+                <div class="video-image not-selectable">
+                    <img th:src="@{/images/video.jpg}" src="static/images/video.jpg"/>
+                    <i class="fa fa-youtube-play left-bottom" aria-hidden="true"></i>
+                </div>
+                <p>Buzkaa</p>
+            </div>
+            <div class="video">
+                <div class="video-image not-selectable">
+                    <img th:src="@{/images/video.jpg}" src="static/images/video.jpg"/>
+                    <i class="fa fa-youtube-play left-bottom" aria-hidden="true"></i>
+                </div>
+                <p>Buzkaa</p>
+            </div>
+            <div class="video">
+                <div class="video-image not-selectable">
+                    <img th:src="@{/images/video.jpg}" src="static/images/video.jpg"/>
+                    <i class="fa fa-youtube-play left-bottom" aria-hidden="true"></i>
+                </div>
+                <p>Buzkaa</p>
+            </div>
+            <div class="video">
+                <div class="video-image not-selectable">
+                    <img th:src="@{/images/video.jpg}" src="static/images/video.jpg"/>
+                    <i class="fa fa-youtube-play left-bottom" aria-hidden="true"></i>
+                </div>
+                <p>Buzkaa</p>
+            </div>
+        </div>
+    </section>
+    <section class="section statistic-section" th:fragment="statistic-section">
+        <span>Subskrypcje Youtube: <span class="statistic">123 456</span></span>
+        <span>Wyświetlenia Youtube: <span class="statistic">123 456</span></span>
+
+        <span>Wyświetlenia Twitch: <span class="statistic">123 456</span></span>
+        <span>Obserwujący Twitch: <span class="statistic">123 456</span></span>
+        <span>Subskrypcje Twitch: <span class="statistic">123 456</span></span>
+    </section>
+
+    <section class="container">
+        <div class="text-content">
+            <h1>Czym jest BlazingSquad?</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tempus, nunc a sollicitudin
+                suscipit, lacus elit tincidunt lacus, eu tristique lacus nibh in purus. Donec sagittis odio nec dui
+                rhoncus bibendum aliquam ac mi. Praesent et tellus urna. Pellentesque orci metus, bibendum sed massa at,
+                dignissim faucibus quam. Quisque lacinia, magna et ornare faucibus, dui nisl consequat leo, eu faucibus
+                erat enim ac metus. Nunc congue efficitur quam a malesuada. Praesent tincidunt semper libero sed
+                pulvinar. Quisque vitae felis nunc. Morbi varius diam eu leo consectetur, ac mollis justo dictum. Sed
+                porta urna varius dignissim suscipit. Curabitur id est eget justo molestie finibus vitae quis massa.
+                Duis sapien ipsum, rhoncus in odio ac, lobortis ornare felis. Praesent at mauris ullamcorper, fermentum
+                ante vitae, placerat est. Nam consequat vestibulum placerat. Quisque nec dolor luctus, fringilla dolor
+                sollicitudin, auctor enim. Praesent sagittis mollis felis vel faucibus.</p>
+        </div>
+    </section>
+
+    <!--/*@thymesVar id="title" type="java.lang.String"*/-->
+    <p th:if="${title}" th:text="${title}"></p>
+
+	<!--
+    <script src=" static/js/jquery-3.2.1.min.js"th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script>
+        $(function () {
+            function hasChildren(parent, type)
+            {
+                return parent.is(type) || parent.find(type).length > 0;
+            }
+
+            function isUndefined(node)
+            {
+                return typeof(node) === "undefined";
+            }
+
+            function hideNavElements(elements)
+            {
+                if (isUndefined(elements))
+                {
+                    elements = $(".nav-elements");
+                }
+                if (isUndefined(elements))
+                {
+                    return false;
+                }
+                if (elements.is(":visible")) {
+                    elements.css("display", "none");
+                    return true;
+                }
+                return false;
+            }
+
+            $(".nav-header").click(function () {
+                if (window.innerWidth > 760) {
+                    return;
+                }
+                var elements = $(".nav-elements");
+                if (!hideNavElements(elements)) {
+                    elements.css("display", "flex");
+                }
+            });
+            $("body").click(function(event)
+            {
+                if (hasChildren($(".nav"), $(event.target)))
+                {
+                    return;
+                }
+                hideNavElements();
+            });
+            $(window).on("scroll", function() {
+                hideNavElements();
+            });
+        });
+    </script>
+	!-->
 </body>
 </html>
